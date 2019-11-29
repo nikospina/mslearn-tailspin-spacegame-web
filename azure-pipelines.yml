@@ -13,7 +13,7 @@ variables:
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Use dotnet sdk 3.x'
+  displayName: 'Use dotnet sdk 3.0.x'
   inputs:
     version: '$(dotnetSdkVersion)'
     includePreviewVersions: true
