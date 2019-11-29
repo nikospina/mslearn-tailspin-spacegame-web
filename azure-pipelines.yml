@@ -9,13 +9,15 @@ pool:
 variables:
   buildConfiguration: 'Release'
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
-  dotnetSdkVersion: '3.0.101'
+  dotnetSdkVersion: '3.0.x'
 
 steps:
-- task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
+
+- task: UseDotNet@2
+  displayName: 'Install .net core 3.0 (preview)'
   inputs:
-    version: '$(dotnetSdkVersion)'
+    packageType: sdk
+    version: '3.0.101'
 
 - task: Npm@1
   displayName: 'Run npm install'
@@ -46,7 +48,14 @@ steps:
   parameters:
     buildConfiguration: 'Release'
 
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests - $(buildConfiguration)'
+  inputs:
+    command: 'test'
+    arguments: '--no-build --configuration $(buildConfiguration)'
+    publishTestResults: true
+    projects: '**/*.Tests.csproj'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
-  
