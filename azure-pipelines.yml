@@ -12,10 +12,10 @@ variables:
   dotnetSdkVersion: '3.0.101'
 
 - task: UseDotNet@2
-  displayName: 'Install .net core 3.0 (preview)'
+  displayName: 'Use dotnet sdk 3.x'
   inputs:
-    packageType: sdk
-    version: '$(dotnetSdkVersion)'
+    version: 3.x
+    includePreviewVersions: true
 
 - task: Npm@1
   displayName: 'Run npm install'
